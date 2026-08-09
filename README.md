@@ -11,9 +11,9 @@ The project uses the open MIT-BIH Arrhythmia Database from PhysioNet.
   annotations, visualizes the data, maps beat symbols into five preliminary
   AAMI-style groups, and validates the initial preprocessing pipeline on five
   representative records.
-- [`reports/Project_Update_1_Report.docx`](reports/Project_Update_1_Report.docx)
-  contains the two-page project introduction, objectives, eight-paper
-  literature review, and dataset description.
+- The [Project Update 1 Google Doc](https://docs.google.com/document/d/1ftVG-AbGJSgVw6haw_vA45QzFVoAhYiBJDZokYMzw7U/edit?usp=sharing)
+  contains the project introduction, objectives, eight-paper literature review,
+  and dataset description.
 - `scripts/` contains reproducible builders for the notebook and report.
 
 No CNN-LSTM model has been trained in this update. Model implementation and

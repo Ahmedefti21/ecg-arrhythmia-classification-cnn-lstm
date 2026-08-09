@@ -103,6 +103,9 @@ target/
 *.ckpt
 *.joblib
 
+# Local research-paper library (publisher PDFs must not be pushed)
+/output/pdf/papers/**/*.pdf
+
 # IPython
 profile_default/
 ipython_config.py
