@@ -78,6 +78,31 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# MIT-BIH / WFDB datasets (download or cache locally; never commit raw data)
+/data/
+/dataset/
+/datasets/
+/mitdb/
+**/mitdb/
+*.dat
+*.hea
+*.atr
+*.xws
+
+# Generated preprocessing arrays and model artifacts
+/outputs/
+/models/
+/checkpoints/
+/tmp/
+*.npy
+*.npz
+*.h5
+*.keras
+*.pt
+*.pth
+*.ckpt
+*.joblib
+
 # IPython
 profile_default/
 ipython_config.py
