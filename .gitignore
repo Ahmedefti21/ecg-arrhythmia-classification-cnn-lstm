@@ -104,7 +104,7 @@ target/
 *.joblib
 
 # Local research-paper library (publisher PDFs must not be pushed)
-/output/pdf/papers/**/*.pdf
+/research papers/pdf/papers/**/*.pdf
 
 # IPython
 profile_default/
