@@ -4,27 +4,54 @@ Deep learning project for beat-level ECG arrhythmia classification using a CNN
 for local waveform feature extraction and an LSTM for temporal feature modeling.
 The project uses the open MIT-BIH Arrhythmia Database from PhysioNet.
 
-## Current project update
+## Project overview
+
+This project implements and evaluates five neural architectures (Simple RNN,
+LSTM, 1D CNN, CNN-LSTM, and Transformer) for classifying heartbeats into the
+four primary AAMI classes (N, S, V, F) using the standard inter-patient DS1/DS2
+protocol from de Chazal et al.
+
+### Key features
+
+- **Inter-patient DS1/DS2 split**: 22 training records, 22 disjoint test records,
+  4 paced records excluded — no data leakage between patients.
+- **RR-interval context**: Eight timing features (previous/next RR intervals,
+  local rhythm statistics, local/global ratios) supplement the 360-sample
+  morphology window.
+- **Class imbalance handling**: Four loss/sampling strategies compared on DS1
+  validation only. Square-root class-weighted cross-entropy was selected by
+  validation macro-F1 for the final benchmark.
+- **Post-hoc calibration**: Temperature scaling and per-class threshold
+  calibration learned on DS1 validation to improve minority-class recall.
+- **5-model ensemble**: All five architectures combined with temperature-scaled
+  probability averaging and jointly calibrated thresholds.
+
+### Notebooks
 
 - [`notebooks/01_initial_eda_preprocessing.ipynb`](notebooks/01_initial_eda_preprocessing.ipynb)
-  is the Colab-ready Week 4 notebook. It audits all 48 record headers and
-  annotations, visualizes the data, maps beat symbols into five preliminary
-  AAMI-style groups, and validates the initial preprocessing pipeline on five
-  representative records.
-- The [Project Update 1 Google Doc](https://docs.google.com/document/d/1ftVG-AbGJSgVw6haw_vA45QzFVoAhYiBJDZokYMzw7U/edit?usp=sharing)
-  contains the project introduction, objectives, eight-paper literature review,
-  and dataset description.
-- `scripts/` contains reproducible builders for the notebook and report.
+  — EDA, signal processing, and preprocessing pipeline.
+- [`cse427_final_submission.ipynb`](cse427_final_submission.ipynb)
+  — **Final submission notebook**: complete pipeline from data loading through
+  five-model training, calibration, ensemble construction, DS2 evaluation, and
+  the final figures. The committed copy includes the executed outputs.
 
-No CNN-LSTM model has been trained in this update. Model implementation and
-evaluation follow after the preprocessing and record-wise split protocol are
-finalized.
+### Final DS2 results
+
+| Model | Accuracy | Macro-F1 | Weighted-F1 |
+| --- | ---: | ---: | ---: |
+| Simple RNN | 0.8554 | 0.4319 | 0.8711 |
+| LSTM | 0.8381 | 0.4229 | 0.8576 |
+| 1D CNN | 0.8972 | **0.5304** | 0.9131 |
+| CNN-LSTM | 0.8911 | 0.5193 | 0.9062 |
+| Transformer | **0.9296** | 0.5097 | **0.9226** |
+| 5-model ensemble | 0.9255 | 0.4821 | 0.9161 |
 
 ## Running the notebook in Google Colab
 
-1. Open the notebook from the `notebooks/` directory in Google Colab.
-2. Run the first installation cell to install `wfdb`.
-3. Select **Runtime > Run all**.
+1. Open `cse427_final_submission.ipynb` in Google Colab.
+2. Set runtime to **GPU** (Runtime > Change runtime type > T4 GPU).
+3. Run the first cell to install `wfdb`.
+4. Select **Runtime > Run all** (approximately 20–40 GPU minutes).
 
 The notebook reads records directly from PhysioNet with `pn_dir="mitdb"`, so a
 manual dataset upload is not required.
